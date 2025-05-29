@@ -1,24 +1,30 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./src/admin/Dashboard";
-import CategoryList from "./src/admin/CategoryList";
-import AdminRoute from "./src/admin/AdminRoute";
-import CategoryForm from "./src/admin/CategoryForm";
-import ArticleList from "./src/admin/ArticleList";
-import ArticleForm from "./src/admin/ArticleForm";
-import Login from "./src/pages/Login";
-import Home from "./src/pages/Home";
-import NavBar from "./src/components/NavBar";
+import {Routes, Route } from "react-router-dom";
+import Dashboard from "./admin/Dashboard";
+import CategoryList from "./admin/CategoryList";
+import AdminRoute from "./admin/AdminRoute";
+import CategoryForm from "./admin/CategoryForm";
+import ArticleList from "./admin/ArticleList";
+import ArticleForm from "./admin/ArticleForm";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import NavBar from "./components/NavBar";
+import Register from "./pages/Register";
+import Search from "./pages/Search";
+import Footer from "./components/Footer";
+import ArticleDetail from './pages/ArticleDetail'; 
 
-function App() {
+export default function App() {
   return (
     <>
       <NavBar />
-      
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-
+          <Route path="/register" element={<Register />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/article/:id" element={<ArticleDetail />} />
+          
           {/* Admin routes */}
           <Route
             path="/admin"
@@ -77,9 +83,8 @@ function App() {
             }
           />
         </Routes>
-      
+      <Footer />
     </>
   );
 }
 
-export default App;

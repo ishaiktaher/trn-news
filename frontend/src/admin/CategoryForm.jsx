@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../services/api';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/SideBar';
 
 const CategoryForm = () => {
   const [name, setName] = useState('');
@@ -16,7 +16,7 @@ const CategoryForm = () => {
         .then(res => setName(res.data.name))
         .catch(err => console.error(err));
     }
-  }, [id]);
+  }, [id, isEditMode]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
