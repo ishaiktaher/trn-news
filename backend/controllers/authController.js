@@ -35,7 +35,8 @@ exports.login = async (req, res) => {
       httpOnly: true,
       sameSite: 'strict',
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 3600000
+      maxAge: 3600000,
+      path: "/"
     }).json({ user: { id: user._id, role: user.role } });
   } catch (err) {
     res.status(500).json({ message: 'Login failed', error: err.message });

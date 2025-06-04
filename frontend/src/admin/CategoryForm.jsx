@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from '../services/api';
+import api from '../services/api';
 import Sidebar from '../components/SideBar';
 
 const CategoryForm = () => {
@@ -12,7 +12,7 @@ const CategoryForm = () => {
 
   useEffect(() => {
     if (isEditMode) {
-      axios.get(`/categories/${id}`)
+      api.get(`/categories/${id}`)
         .then(res => setName(res.data.name))
         .catch(err => console.error(err));
     }
@@ -22,9 +22,9 @@ const CategoryForm = () => {
     e.preventDefault();
     try {
       if (isEditMode) {
-        await axios.put(`/categories/${id}`, { name });
+        await api.put(`/categories/${id}`, { name });
       } else {
-        await axios.post('/categories', { name });
+        await api.post('/categories', { name });
       }
       navigate('/admin/categories');
     } catch (err) {

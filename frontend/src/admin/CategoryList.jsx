@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../services/api';
+import api from '../services/api';
 import Sidebar from '../components/SideBar';
 import { Link } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ const CategoryList = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    axios.get('/categories').then(res => setCategories(res.data));
+    api.get('/categories').then(res => setCategories(res.data));
   }, []);
 
   return (

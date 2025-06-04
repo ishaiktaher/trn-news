@@ -7,8 +7,8 @@ const {
   updateArticle,
   deleteArticle
 } = require('../controllers/articleController');
-const upload = require('../middleware/upload');
-const { resizeImage } = require('../middleware/upload');
+const { upload, resizeImage } = require('../middleware/upload');
+
 
 const { protect, authorizeRoles } = require('../middleware/auth');
 
@@ -21,7 +21,7 @@ router.get('/:slug', getSingleArticle);
 router.post(
   '/',
   protect,
-  authorizeRoles('editor', 'admin'),
+  authorizeRoles('editor', 'admin', 'author'),
   upload,
   resizeImage,
   createArticle
@@ -30,13 +30,18 @@ router.post(
 router.put(
   '/:id',
   protect,
-  authorizeRoles('editor', 'admin'),
+  authorizeRoles('editor', 'admin', 'author'),
   upload,
   resizeImage,
   updateArticle
 );
-router.delete('/:id', protect, authorizeRoles('editor', 'admin'), deleteArticle);
 
+router.delete('/:id', protect, authorizeRoles('editor', 'admin', 'author'), deleteArticle);
 
+// routes/tags.js
+router.get('/tags', async (req, res) => {
+  const tags = await Article.distinct('tags');
+  res.json(tags);
+});
 
 module.exports = router;

@@ -3,9 +3,12 @@ import { useAuth } from '../hooks/useAuth';
 
 const AdminRoute = ({ children }) => {
   const { user } = useAuth();
-
-  if (!user || user.role !== 'admin') return <Navigate to="/" />;
-  return children;
+  
+  if (user?.role === 'admin' || user?.role === 'author' || user?.role === 'editor') { 
+    
+    return children;
+  }
+    return <Navigate to="/" />
 };
 
 export default AdminRoute;

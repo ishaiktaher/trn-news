@@ -1,6 +1,4 @@
-// src/public/LoginPage.jsx
 import { useState } from 'react';
-// import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import api from '../services/api';
@@ -16,12 +14,12 @@ const Login = () => {
     try {
       const res = await api.post('/auth/login', { email, password });
 
-      localStorage.setItem('token', res.data.token);
+      // localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
 
       setUser(res.data.user);
 
-      navigate('/admin');
+      navigate('/admin/dashboard');
     } catch (err) {
       alert('Login failed: ' + (err.response?.data?.message || err.message));
     }

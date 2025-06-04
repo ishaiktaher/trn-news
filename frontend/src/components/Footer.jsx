@@ -70,9 +70,9 @@ const Footer = () => {
               <li>
                 <Link to="/contact" className="hover:text-white transition-colors">Contact</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/careers" className="hover:text-white transition-colors">Careers</Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
               </li>

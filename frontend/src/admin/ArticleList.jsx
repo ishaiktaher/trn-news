@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../services/api';
+import api from '../services/api.js';
 import Sidebar from '../components/SideBar';
 import { Link } from 'react-router-dom';
 
 const ArticleList = () => {
   const [articles, setArticles] = useState([]);
-
+  const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
-    axios.get('/articles').then(res => setArticles(res.data));
+    api.get('/articles').then(res => setArticles(res.data));
   }, []);
 
   return (
@@ -25,7 +26,7 @@ const ArticleList = () => {
                   <p className="text-sm text-gray-500">{article.category?.name}</p>
                 </div>
                 <div>
-                  <Link to={`/admin/articles/edit/${article._id}`} className="text-blue-600 mr-2">Edit</Link>
+                  <Link to={`/admin/articles/edit/${article.slug}`} className="text-blue-600 mr-2">Edit</Link>
                   {/* Delete logic to be added */}
                 </div>
               </div>

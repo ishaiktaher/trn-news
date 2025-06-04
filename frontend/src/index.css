@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
+#root {
+  height: 100%;
+}
 
 /* Custom animations */
 @keyframes marquee {
@@ -25,6 +30,12 @@
 /* Dark mode transitions */
 html {
   @apply transition-colors duration-200;
+}
+
+/* css for react-select */
+.select__control {
+  border-radius: 0.375rem;
+  border-color: #e2e8f0;
 }
 
 /* body {

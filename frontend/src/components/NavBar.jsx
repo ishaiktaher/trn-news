@@ -12,6 +12,7 @@ import {
   FaLinkedinIn,
   FaYoutube
 } from 'react-icons/fa';
+import api from "../services/api.js";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,9 +22,9 @@ const Navbar = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('/api/categories?limit=4');
-        const data = await response.json();
-        setCategories(data);
+        const response = await api.get('/categories?limit=4');
+        // const data = await response.json();
+        setCategories(response.data.splice(0,4));
       } catch (error) {
         console.error('Error fetching categories:', error);
         // Fallback categories if API fails
@@ -49,6 +50,8 @@ const Navbar = () => {
               <Link to="/news" className="text-blue-600 hover:underline">News</Link>
               <Link to="/pr-agency" className="text-gray-600 hover:underline">PR Agency</Link>
               <Link to="/fruit-delivery" className="text-gray-600 hover:underline">Fruit Delivery</Link>
+              <Link to="/advertise" className="text-gray-600 hover:underline">Advertise</Link>
+
             </div>
             
             <div className="flex items-center space-x-4">
@@ -96,6 +99,7 @@ const Navbar = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
+            <Link to="/" className="text-gray-700 hover:text-blue-600 font-medium">Home</Link>
               {categories.map(category => (
                 <Link 
                   key={category._id} 

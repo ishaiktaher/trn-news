@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 exports.protect = async (req, res, next) => {
-  let token = req.headers.authorization?.startsWith('Bearer') ? req.headers.authorization.split(' ')[1] : null;
+  const token = req.cookies?.token; // ✅ Only read from cookies
 
   if (!token) return res.status(401).json({ message: 'Not authorized, no token' });
 

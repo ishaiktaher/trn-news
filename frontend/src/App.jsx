@@ -1,4 +1,4 @@
-import {Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Dashboard from "./admin/Dashboard";
 import CategoryList from "./admin/CategoryList";
 import AdminRoute from "./admin/AdminRoute";
@@ -7,30 +7,66 @@ import ArticleList from "./admin/ArticleList";
 import ArticleForm from "./admin/ArticleForm";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import About from "./pages/AboutUs";
 import NavBar from "./components/NavBar";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
 import Footer from "./components/Footer";
-import ArticleDetail from './pages/ArticleDetail'; 
+import ArticleDetail from "./pages/ArticleDetail";
+import AdminUserPage from "./admin/AdminUserPage";
+import MainLayout from "./components/layouts/MainLayout";
+import AdminLayout from "./components/layouts/AdminLayout";
+import NotFound from "./pages/NotFound";
+import CategoryPage from "./pages/CategoryPage";
+import Contact from './pages/Contact';
+import Advertise from './pages/Advertise';
+import PrivacyPolicy from './pages/Privacy';
 
 export default function App() {
   return (
     <>
-      <NavBar />
-        <Routes>
+      <Routes>
+        <Route element={<MainLayout />}>
           {/* Public routes */}
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/news" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/register" element={<Register />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/advertise" element={<Advertise />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+
           <Route path="/article/:id" element={<ArticleDetail />} />
-          
+          <Route path="/category/:slug" element={<CategoryPage />} />
+
+          <Route path="*" element={<NotFound />} />
+        </Route>
+
+        {/* Admin-only layout (no navbar/footer) */}
+        <Route element={<AdminLayout />}>
           {/* Admin routes */}
+          <Route path="/login" element={<Login />} />
           <Route
             path="/admin"
             element={
+                <Login />
+            }
+          />
+          <Route
+            path="/admin/dashboard"
+            element={
               <AdminRoute>
                 <Dashboard />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/users"
+            element={
+              <AdminRoute>
+                <AdminUserPage />
               </AdminRoute>
             }
           />
@@ -82,9 +118,8 @@ export default function App() {
               </AdminRoute>
             }
           />
-        </Routes>
-      <Footer />
+        </Route>
+      </Routes>
     </>
   );
 }
-

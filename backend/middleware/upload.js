@@ -9,7 +9,7 @@ if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });
 }
 
-// Multer storage (memory for sharp to process)
+// Multer storage
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
@@ -24,27 +24,50 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  limits: { fileSize: 10 * 1024 * 1024 },
 });
 
-const resizeImage = async (req, res, next) => {
-  if (!req.file) return next();
+const uploadFields = upload.fields([
+  { name: 'thumbnail', maxCount: 1 },
+  { name: 'featuredImage', maxCount: 1 }
+]);
 
-  const filename = `article-${Date.now()}.jpeg`;
+const resizeImage = async (req, res, next) => {
+  const images = req.files;
+
+  if (!images || (!images.thumbnail && !images.featuredImage)) {
+    return next();
+  }
 
   try {
-    await sharp(req.file.buffer)
-      .resize(800, 450)
-      .toFormat('jpeg')
-      .jpeg({ quality: 80 })
-      .toFile(path.join(uploadPath, filename));
+    if (images.thumbnail) {
+      const thumbFilename = `thumb-${Date.now()}.jpeg`;
+      await sharp(images.thumbnail[0].buffer)
+        .resize(400, 225)
+        .toFormat('jpeg')
+        .jpeg({ quality: 80 })
+        .toFile(path.join(uploadPath, thumbFilename));
+      req.body.thumbnail = thumbFilename;
+    }
 
-    req.file.filename = filename;
+    if (images.featuredImage) {
+      const featuredFilename = `featured-${Date.now()}.jpeg`;
+      await sharp(images.featuredImage[0].buffer)
+        .resize(800, 450)
+        .toFormat('jpeg')
+        .jpeg({ quality: 80 })
+        .toFile(path.join(uploadPath, featuredFilename));
+      req.body.featuredImage = featuredFilename;
+    }
+
     next();
   } catch (err) {
     next(err);
   }
 };
 
-module.exports = upload.single('thumbnail');
-module.exports.resizeImage = resizeImage;
+// ✅ Export properly
+module.exports = {
+  upload: uploadFields,
+  resizeImage
+};

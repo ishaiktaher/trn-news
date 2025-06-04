@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node-terminal",
+      "name": "Front End: start",
+      "request": "launch",
+      "command": "npm run start",
+      "cwd": "${workspaceFolder}/frontend"
+    },
+    {
+      "type": "node-terminal",
+      "name": "Back End: start",
+      "request": "launch",
+      "command": "npm run start",
+      "cwd": "${workspaceFolder}/backend"
+    }
+  ]
+}
