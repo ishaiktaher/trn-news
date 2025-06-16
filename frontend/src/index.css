@@ -18,6 +18,9 @@ body,
   animation: marquee 20s linear infinite;
 }
 
+.overflow-wrap-break-word {
+  overflow-wrap: break-word;
+}
 /* Hide scrollbar but allow scrolling */
 .scrollbar-hide {
   -ms-overflow-style: none;

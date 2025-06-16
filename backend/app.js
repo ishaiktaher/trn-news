@@ -12,6 +12,7 @@ const categoryRoutes = require('./routes/categories');
 const authRoutes = require('./routes/auth');
 const adminUserRoutes = require('./routes/adminUserRoutes');
 const contactRoutes = require("./routes/contactRoutes");
+const uploadRoutes = require("./routes/uploadRoutes");
 
 dotenv.config();
 
@@ -39,11 +40,7 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
 // Static uploads with CORS headers
-app.use('/uploads', (req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  next();
-}, express.static(path.join(__dirname, 'public/uploads')));
+app.use("/uploads", express.static("uploads"));
 
 // API Routes
 app.use('/api/articles', articleRoutes);
@@ -51,6 +48,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin/users', adminUserRoutes);
 app.use("/api/contact", contactRoutes);
+app.use('/api/uploads', uploadRoutes);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)

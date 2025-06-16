@@ -1,5 +1,4 @@
-import api from '../services/api';
-
+// components/CustomUploadAdapter.js
 export default class CustomUploadAdapter {
   constructor(loader) {
     this.loader = loader;
@@ -7,23 +6,23 @@ export default class CustomUploadAdapter {
 
   upload() {
     return this.loader.file.then(
-      (file) =>
+      file =>
         new Promise((resolve, reject) => {
           const data = new FormData();
-          data.append("upload", file);
+          data.append("upload", file); // ✅ important
 
-          api.post("uploads", {
+          fetch("http://localhost:4000/api/uploads", {
+            method: "POST",
             body: data,
           })
-            .then((res) => {
-              resolve({ default: `http://localhost:4000/${res.data.url}` });
-            })
-            .catch((err) => reject(err));
+            .then(res => res.json())
+            .then(res => resolve({ default: `http://localhost:4000${res.url}` }))
+            .catch(err => reject(err));
         })
     );
   }
 
   abort() {
-    // Optional: implement cancel support
+    // optional
   }
 }

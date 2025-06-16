@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import placeholderImage from "../assets/news-placeholder.jpg";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const getReadTime = (content) => {
   if (!content) return "1 min read";
@@ -32,7 +33,7 @@ const ArticleList = ({ articles = [], title = "Articles" }) => {
             <img
               src={
                 article.featuredImage
-                  ? `http://localhost:4000/uploads/${article.featuredImage}`
+                  ? `${API_URL}/uploads/${article.featuredImage}`
                   : placeholderImage
               }
               alt={article.title}

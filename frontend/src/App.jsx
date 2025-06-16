@@ -42,18 +42,19 @@ export default function App() {
           <Route path="/category/:slug" element={<CategoryPage />} />
 
           <Route path="*" element={<NotFound />} />
+          <Route path="/login" element={<Login />} />
+
         </Route>
 
         {/* Admin-only layout (no navbar/footer) */}
         <Route element={<AdminLayout />}>
           {/* Admin routes */}
-          <Route path="/login" element={<Login />} />
-          <Route
+          {/* <Route
             path="/admin"
             element={
                 <Login />
             }
-          />
+          /> */}
           <Route
             path="/admin/dashboard"
             element={

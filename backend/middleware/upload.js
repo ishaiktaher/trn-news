@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 // Ensure upload directory exists
-const uploadPath = path.join(__dirname, '../public/uploads');
+const uploadPath = path.join(__dirname, '..', 'uploads');
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });
 }
@@ -13,7 +13,7 @@ if (!fs.existsSync(uploadPath)) {
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
-  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
+  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
